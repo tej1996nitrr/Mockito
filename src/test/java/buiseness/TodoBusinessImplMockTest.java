@@ -11,8 +11,6 @@ import static org.junit.Assert.assertEquals;
 
 public class TodoBusinessImplMockTest {
 
-
-
 @Test
 public void usingMockito() {
     TodoService todoService = mock(TodoService.class);
@@ -24,4 +22,14 @@ public void usingMockito() {
             .retrieveTodosRelatedToSpring("Username");
     assertEquals(2, todos.size());
 }
+    @Test
+    public void usingMockitoEmptyList() {
+        TodoService todoService = mock(TodoService.class);
+        List<String> allTodos = Arrays.asList();
+        when(todoService.retrieveTodos("Username")).thenReturn(allTodos);
+        TodoBusiness todoBusinessImpl = new TodoBusiness(todoService);
+        List<String> todos = todoBusinessImpl
+                .retrieveTodosRelatedToSpring("Username");
+        assertEquals(0, todos.size());
+    }
 }
