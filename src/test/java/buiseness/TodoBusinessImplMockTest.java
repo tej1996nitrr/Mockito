@@ -26,7 +26,7 @@ public void usingMockito() {
     public void usingMockitoEmptyList() {
         TodoService todoService = mock(TodoService.class);
         List<String> allTodos = Arrays.asList();
-        when(todoService.retrieveTodos("Username")).thenReturn(allTodos);
+        when(todoService.retrieveTodos("Username")).thenReturn(allTodos);//dynamic stubbing
         TodoBusiness todoBusinessImpl = new TodoBusiness(todoService);
         List<String> todos = todoBusinessImpl
                 .retrieveTodosRelatedToSpring("Username");
