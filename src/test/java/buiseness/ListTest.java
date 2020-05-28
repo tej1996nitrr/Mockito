@@ -36,4 +36,15 @@ public class ListTest {
 
 
     }
+
+    @Test(expected = RuntimeException.class)
+    public void testMockListEx()
+    {
+        List mocklist =mock(List.class);
+        when(mocklist.get(0)).thenThrow(new RuntimeException("Exception"));
+//        assertEquals("String",mocklist.get(0));
+        mocklist.get(0);
+
+
+    }
 }

@@ -1,6 +1,8 @@
 package buiseness;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
+
 import data.api.TodoService;
 import org.junit.Test;
 
@@ -8,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class TodoBusinessImplMockTest {
 
@@ -31,5 +34,31 @@ public void usingMockito() {
         List<String> todos = todoBusinessImpl
                 .retrieveTodosRelatedToSpring("Username");
         assertEquals(0, todos.size());
+    }
+    @Test
+    public void testDeleteTodosNotRelatedToSpring()
+    {
+        TodoService todoService = mock(TodoService.class);
+
+        List<String> allTodos = Arrays.asList("Learn Spring MVC",
+                "Learn Spring", "Learn to Dance");
+
+        when(todoService.retrieveTodos("User")).thenReturn(allTodos);
+
+        TodoBusiness todoBusinessImpl = new TodoBusiness(todoService);
+
+        todoBusinessImpl.deleteTodoNotRelatedtoSpring("User");
+
+        verify(todoService).deleteTodo("Learn to Dance");
+
+        verify(todoService,never()).deleteTodo("Learn Spring MVC");
+
+        verify(todoService, never()).deleteTodo("Learn Spring");
+
+        verify(todoService, times(1)).deleteTodo("Learn to Dance");
+        // atLeastOnce, atLeast
+
+
+
     }
 }

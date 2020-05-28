@@ -22,7 +22,19 @@ class TodoBusiness {
             if (todo.contains("Spring")) {
                 filteredTodos.add(todo);
             }
+
         }
         return filteredTodos;
+    }
+    public void deleteTodoNotRelatedtoSpring(String user){
+        List<String> todos = todoService.retrieveTodos(user);
+        for(String todo:todos)
+        {
+            if(!todo.contains("Spring"))
+            {
+                todoService.deleteTodo(todo);
+            }
+        }
+//        return todos;
     }
 }
