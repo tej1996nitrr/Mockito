@@ -5,6 +5,7 @@ import static org.mockito.BDDMockito.given;
 
 import data.api.TodoService;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +59,23 @@ public void usingMockito() {
         verify(todoService, times(1)).deleteTodo("Learn to Dance");
         // atLeastOnce, atLeast
 
+    }
+    @Test
+    public void captureArgument() {
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor
+                .forClass(String.class);
 
+        TodoService todoService = mock(TodoService.class);
+
+        List<String> allTodos = Arrays.asList("Learn Spring MVC",
+                "Learn Spring", "Learn to Dance");
+        when(todoService.retrieveTodos("user")).thenReturn(allTodos);
+
+        TodoBusiness todoBusinessImpl = new TodoBusiness(todoService);
+        todoBusinessImpl.deleteTodoNotRelatedtoSpring("user");
+        verify(todoService).deleteTodo(argumentCaptor.capture());
+
+        assertEquals("Learn to Dance", argumentCaptor.getValue());
 
     }
 }
