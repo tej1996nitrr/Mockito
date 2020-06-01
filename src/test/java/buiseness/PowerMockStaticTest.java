@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(UtilityClass.class)
-public class PowerMockTest {
+public class PowerMockStaticTest {
     //specify runner - PowerMockRunner
     //initialize the class to mock - PrepareForTest, PowerMockito.mockStatic(UtilityClass.class);
     //mock
